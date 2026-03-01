@@ -1,0 +1,64 @@
+@startuml
+class Application {
+  +status : int
+  -window
+  +run()
+}
+
+package graphics {
+  class Menu {
+    -mode : short
+    +displayMenu() : int
+  }
+
+  class Renderer {
+    -window
+    +frame()
+    +displayParticle(p : Particle) : void
+    +displaySystem(s : System) : void
+  }
+}
+
+package core {
+  class System {
+    -particles : Particle[]
+    +addParticle(p : Particle)
+    +removeParticle(p : Particle)
+    +update(dt)
+  }
+
+  abstract class Particle {
+    -position
+    -velocity
+    -mass
+    -color
+
+    +update()
+    +applyForce()
+  }
+
+  class Sphere
+  class Ball
+
+  Sphere --|> Particle
+  Ball --|> Particle
+
+  System "1" o-- "*" Particle
+}
+
+package physics {
+  class Engine {
+    -globalForces
+    +addForce()
+    +update(s : System)
+  }
+}
+
+Application --> graphics.Renderer
+Application --> physics.Engine
+Application --> core.System
+
+physics.Engine --> core.System
+graphics.Renderer --> core.System
+graphics.Renderer --> core.Particle
+@enduml
