@@ -6,7 +6,7 @@ CXXFLAGS = -std=c++17 -Wall -Wextra -I./src
 TARGET = bin/enlil.exe
 
 # Find all sources
-SOURCES = main.cpp
+SOURCES = main.cpp $(shell dir /s /b src\\*.cpp)
 
 # Default build
 all: $(TARGET)
