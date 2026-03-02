@@ -18,5 +18,10 @@ Enlil lets you simulate two types of patticles in any desired amount on a platfo
 # Requirements
 
  - C++17 or newer
- - CMake (recommended)
- - GCC 
+ - CMake
+ - MSVC
+
+
+ # Build
+
+ cmake --build build
