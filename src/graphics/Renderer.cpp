@@ -1,4 +1,5 @@
 #include "graphics/Renderer.h"
+#include "graphics/Camera.h"
 
 void Renderer::initializeGL()
 {
@@ -28,22 +29,22 @@ void Renderer::paintGL()
 
     glClear(GL_COLOR_BUFFER_BIT);
 
-    QMatrix4x4 matrix;
-    matrix.perspective(60.0f, float(width()) / float(height()), 0.1f, 100.0f);
-    matrix.translate(0, 0, -2);
+    Camera* cam = new Camera(float(width()) / float(height()));
 
-    m_program->setUniformValue(m_matrixUniform, matrix);
+    m_program->setUniformValue(m_matrixUniform, cam->getMatrix());
 
     GLfloat vertices[] = {
-        0.0f, 0.707f, 0.0f,
-        -0.707f, -0.5f, 0.0f,
-        0.707f, -0.5f, 0.0f
+        0.0f, 0.5f, 0.0f,
+        -0.6f, -0.5f, 0.0f,
+        0.6f, -0.5f, 0.0f,
+        0.0f, -0.8f, 0.5f
     };
 
     GLfloat colors[] = {
         1.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 1.0f
+        0.0f, 0.0f, 1.0f,
+        1.f, 1.f, 1.f
     };
 
     glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices);
@@ -52,7 +53,7 @@ void Renderer::paintGL()
     glEnableVertexAttribArray(m_posAttr);
     glEnableVertexAttribArray(m_colAttr);
 
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
     glDisableVertexAttribArray(m_colAttr);
     glDisableVertexAttribArray(m_posAttr);
