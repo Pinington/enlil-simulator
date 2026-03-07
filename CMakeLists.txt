@@ -6,17 +6,21 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets OpenGL OpenGLWidgets)
 
-# Collect all .cpp files in src/
-file(GLOB_RECURSE SOURCES
-    "src/*.cpp"
-)
+file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 add_executable(enlil
     main.cpp
     ${SOURCES}
 )
 
-# Include headers
+
+qt_add_resources(enlil
+    PREFIX "/"
+    FILES
+        src/graphics/shaders/triangle.vert
+        src/graphics/shaders/triangle.frag
+)
+
 target_include_directories(enlil PRIVATE
     ${CMAKE_SOURCE_DIR}/include
 )

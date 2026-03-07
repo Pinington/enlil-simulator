@@ -24,8 +24,8 @@ void Renderer::initializeGL()
     glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
     
     m_program = new QOpenGLShaderProgram(this);
-    m_program->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexShaderSource);
-    m_program->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentShaderSource);
+    m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/src/graphics/shaders/triangle.vert");
+    m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/src/graphics/shaders/triangle.frag");
     m_program->link();
     m_posAttr = m_program->attributeLocation("posAttr");
     m_colAttr = m_program->attributeLocation("colAttr");
@@ -44,7 +44,6 @@ void Renderer::paintGL()
     m_program->bind();
 
     glClear(GL_COLOR_BUFFER_BIT);
-    makeCurrent();
 
     QMatrix4x4 matrix;
     matrix.perspective(60.0f, 4.0f/3.0f, 0.1f, 100.0f);
@@ -67,13 +66,13 @@ void Renderer::paintGL()
     glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices);
     glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors);
 
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(m_posAttr);
+    glEnableVertexAttribArray(m_colAttr);
 
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
-    glDisableVertexAttribArray(1);
-    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(m_colAttr);
+    glDisableVertexAttribArray(m_posAttr);
 
     m_program->release();
 }
