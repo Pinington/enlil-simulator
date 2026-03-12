@@ -8,8 +8,11 @@
 #include <QOpenGLShaderProgram>
 #include "graphics/Camera.h"
 
-
-void drawCircle(float center, float radius, std::vector<GLfloat>& pos, std::vector<GLfloat>& col, std::vector<GLfloat>& normals);
+struct Point {
+    float x;
+    float y;
+    float z;
+};
 
 class Renderer : public QOpenGLWidget, protected QOpenGLFunctions
 {
@@ -20,6 +23,7 @@ protected:
     void initializeGL() override;
     void resizeGL(int w, int h) override;
     void paintGL() override;
+    void drawCircle(Point center, float radius);
     Camera cam;
     GLuint m_posAttr;
     GLuint m_colAttr;

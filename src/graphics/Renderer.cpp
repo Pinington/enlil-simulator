@@ -23,7 +23,9 @@ void Renderer::initializeGL()
 
 void Renderer::resizeGL(int w, int h)
 {
+    if (h == 0) h = 1;
     glViewport(0, 0, w, h);
+    cam.chPerspective(float(w) / float(h));
 }
 
 void Renderer::paintGL()
@@ -34,34 +36,14 @@ void Renderer::paintGL()
     
     m_program->setUniformValue(m_matrixUniform, cam.getMatrix());
 
-    std::vector<GLfloat> vertices;
-    std::vector<GLfloat> colors;
-    std::vector<GLfloat> normals;
+    Point center = {-0.5f, 0.0f, 0.0f};
+    drawCircle(center, 0.5f);
 
-    drawCircle(0.0f, 0.5f, vertices, colors, normals);
-
-    glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, vertices.data());
-    glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, colors.data());
-    glVertexAttribPointer(m_normAttr, 3, GL_FLOAT, GL_FALSE, 0, normals.data());
-
-    glEnableVertexAttribArray(m_posAttr);
-    glEnableVertexAttribArray(m_colAttr);
-    glEnableVertexAttribArray(m_normAttr);
-
-    glDrawArrays(GL_TRIANGLES, 0, vertices.size()/3);
-
-    glDisableVertexAttribArray(m_normAttr);
-    glDisableVertexAttribArray(m_colAttr);
-    glDisableVertexAttribArray(m_posAttr);
+    Point center2 = {0.5f, 0.0f, -0.2f};
+    drawCircle(center2, 0.3f);
 
     m_program->release();
 }
-
-struct Point {
-    float x;
-    float y;
-    float z;
-};
 
 Point evalSphere(float u, float v, float r) {
     Point p;
@@ -72,13 +54,15 @@ Point evalSphere(float u, float v, float r) {
     return p;
 }
 
-void drawCircle(float center, float radius, std::vector<GLfloat>& pos,
-                                            std::vector<GLfloat>& col, 
-                                            std::vector<GLfloat>& normals) {
+void Renderer::drawCircle(Point center, float radius) {
+    std::vector<GLfloat> pos;
+    std::vector<GLfloat> col;
+    std::vector<GLfloat> normals;
+    
     auto addVertex = [&](Point p) {
-        pos.push_back(p.x);
-        pos.push_back(p.y);
-        pos.push_back(p.z);
+        pos.push_back(p.x + center.x);
+        pos.push_back(p.y + center.y);
+        pos.push_back(p.z + center.z);
 
         col.push_back(0.14);
         col.push_back(0.43);
@@ -119,4 +103,18 @@ void drawCircle(float center, float radius, std::vector<GLfloat>& pos,
             addVertex(p3);
         }
     }
+
+    glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, pos.data());
+    glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, col.data());
+    glVertexAttribPointer(m_normAttr, 3, GL_FLOAT, GL_FALSE, 0, normals.data());
+
+    glEnableVertexAttribArray(m_posAttr);
+    glEnableVertexAttribArray(m_colAttr);
+    glEnableVertexAttribArray(m_normAttr);
+
+    glDrawArrays(GL_TRIANGLES, 0, pos.size()/3);
+
+    glDisableVertexAttribArray(m_normAttr);
+    glDisableVertexAttribArray(m_colAttr);
+    glDisableVertexAttribArray(m_posAttr);
 }
