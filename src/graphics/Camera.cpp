@@ -6,6 +6,11 @@ Camera::Camera(float aspectRatio) {
     this->projection.perspective(60.0f, aspectRatio, 0.1f, 100.0f);
 }
 
+void Camera::chPerspective(float aspectRatio) {
+    projection.setToIdentity();
+    projection.perspective(60.0f, aspectRatio, 0.1f, 100.0f);
+}
+
 void Camera::rotate(int x, int y, int z, float deg) {
     this->model.rotate(deg, x, y, z);
 }
