@@ -12,7 +12,7 @@ private:
 public:
     Camera(float aspectRatio);
     void chPerspective(float aspectRatio);
-    void rotate(int x, int y, int z, float deg);
+    void rotate(float x, float y, float z, float deg);
     void move(float x, float y, float z);
     QMatrix4x4 getMatrix();
 };
