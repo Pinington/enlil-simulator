@@ -12,7 +12,7 @@ void Camera::chPerspective(float aspectRatio) {
 }
 
 void Camera::rotate(int x, int y, int z, float deg) {
-    this->model.rotate(deg, x, y, z);
+    this->view.rotate(deg, x, y, z);
 }
 
 void Camera::move(float x, float y, float z) {
