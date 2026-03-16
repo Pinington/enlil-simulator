@@ -73,14 +73,17 @@ Point evalSphere(float u, float v, float r) {
 void Renderer::drawSphere(Point center, float radius) {
     
     auto addVertex = [&](Point p) {
+        // Coordinates
         arr.push_back(p.x + center.x);
         arr.push_back(p.y + center.y);
         arr.push_back(p.z + center.z);
 
+        // Colors
         arr.push_back(0.14);
         arr.push_back(0.43);
         arr.push_back(0.12);
 
+        // Normals are normalized in the fragment shader
         arr.push_back(p.x);
         arr.push_back(p.y);
         arr.push_back(p.z);
