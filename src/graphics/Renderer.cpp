@@ -1,6 +1,18 @@
 #include "graphics/Renderer.h"
 #include "graphics/Camera.h"
 
+Renderer::Renderer(QWidget *parent)
+    : QOpenGLWidget(parent),
+      cam(float(800) / float(600))
+{
+    QTimer* timer = new QTimer(this);
+
+    connect(timer, &QTimer::timeout,
+            this, QOverload<>::of(&Renderer::update));
+
+    timer->start(16); // ~60 FPS
+}
+
 void Renderer::initializeGL()
 {
     makeCurrent();  
@@ -15,6 +27,8 @@ void Renderer::initializeGL()
     m_program->link();
     
     m_matrixUniform = m_program->uniformLocation("matrix");
+    colorUniform = m_program->uniformLocation("timeColor");
+    tm.start();
 
     glGenVertexArrays(1, &this->VAO);
     glGenBuffers(1, &this->VBO);
@@ -51,6 +65,8 @@ void Renderer::paintGL()
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     m_program->setUniformValue(m_matrixUniform, cam.getMatrix());
+    float curr_time = tm.elapsed() / 1000.0f;
+    m_program->setUniformValue(colorUniform, QVector3D(0.5 + sin(curr_time) / 2, 0, 0));
 
     glBindVertexArray(this->VAO);
     glDrawElements(GL_TRIANGLES, idx.size(), GL_UNSIGNED_INT, 0);

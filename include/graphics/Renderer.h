@@ -6,6 +6,8 @@
 #include <QWidget>
 #include <QOpenGLWidget>
 #include <QOpenGLShaderProgram>
+#include <QElapsedTimer>
+#include <QTimer>
 #include "graphics/Camera.h"
 
 struct Point {
@@ -17,7 +19,7 @@ struct Point {
 class Renderer : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
 {
 public:
-    explicit Renderer(QWidget *parent = nullptr) : QOpenGLWidget(parent), cam(float(800)/float(600)) {};
+    explicit Renderer(QWidget *parent = nullptr);
     void drawSphere(Point center, float radius);
 
 protected:
@@ -28,9 +30,9 @@ protected:
     std::vector<unsigned int> idx;
     Camera cam;
     GLuint m_matrixUniform;
-    GLuint VAO;
-    GLuint VBO;
-    GLuint EBO;
+    GLuint VAO, VBO, EBO;
+    GLuint colorUniform;
+    QElapsedTimer tm;
     int vertexCount = 0;
     QOpenGLShaderProgram *m_program;
 };

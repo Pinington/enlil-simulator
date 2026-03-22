@@ -6,6 +6,7 @@ in vec3 fragColor;
 out vec4 color;
 
 uniform vec3 lightPos = vec3(5.0,5.0,5.0);
+uniform vec3 timeColor; 
 
 void main() {
     vec3 norm = normalize(fragNormal);
@@ -14,5 +15,5 @@ void main() {
     vec3 diffuse = diff * fragColor;
 
     vec3 ambient = 0.8 * fragColor;
-    color = vec4(diffuse + ambient, 1.0);
+    color = vec4(diffuse + ambient * 2 * (1 - timeColor.x) + timeColor * 0.6, 1.0);
 }
