@@ -2,6 +2,7 @@
 Renderer:
  - Instantiate spheres instead of a huge vbo
  - Set an FPS
+ - Maybe make a mesh factory class
 
 Core:
  - Make particles move around with gravity in a semi-sphere platform  
