@@ -154,8 +154,8 @@ void Renderer::keyPressEvent(QKeyEvent *event) {
     switch (k) {
         case Qt::Key_W: cam.move(0, 0, cam.speed); break;
         case Qt::Key_S: cam.move(0, 0, -cam.speed); break;
-        case Qt::Key_A: cam.move(cam.speed, 0, 0); break;
-        case Qt::Key_D: cam.move(-cam.speed, 0, 0); break;
+        case Qt::Key_A: cam.rotate(0, 1, 0, 2); break;
+        case Qt::Key_D: cam.rotate(0, 1, 0, -2); break;
     }
     repaint();
 }

@@ -2,8 +2,7 @@
 
 Camera::Camera(float aspectRatio) {
     this->model.setToIdentity();
-    this->view.rotate(0.0f, 0.0f, 1.0f, 0.0f);
-    this->view.translate(0, 0, -2);
+    this->view.lookAt({3, 1, 3}, {0, 0, 0}, {0, 1, 0});
     this->projection.perspective(60.0f, aspectRatio, 0.1f, 100.0f);
 }
 
