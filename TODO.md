@@ -23,3 +23,4 @@ Camera:
 Tidiness:
  - Document the code  
  - make consts file with resolutions, FPS, etc...
+ - Throw errors in renderer

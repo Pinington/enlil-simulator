@@ -34,18 +34,7 @@ void Renderer::initializeGL()
 
     Point center = {-0.5f, 0.0f, 0.0f};
     drawSphere(center, 0.5f);
-
-    Point center2 = {0.5f, 0.0f, -0.2f};
-    drawSphere(center2, 0.3f);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*)0);
-    glEnableVertexAttribArray(0);
-    
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*) (3 * sizeof(GLfloat)));
-    glEnableVertexAttribArray(1);
-    
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*) (6 * sizeof(GLfloat)));
-    glEnableVertexAttribArray(2);
+    instantiateSphere();
 
     m_program->release();
 }
@@ -67,7 +56,8 @@ void Renderer::paintGL()
     m_program->setUniformValue(m_matrixUniform, cam.getMatrix());
 
     glBindVertexArray(this->VAO);
-    glDrawElements(GL_TRIANGLES, idx.size(), GL_UNSIGNED_INT, 0);
+    // glDrawElements(GL_TRIANGLES, idx.size(), GL_UNSIGNED_INT, 0);
+    glDrawElementsInstanced(GL_TRIANGLES, this->vertexCount, GL_UNSIGNED_INT, 0, 4);
 
     m_program->release();
 }
@@ -138,7 +128,7 @@ void Renderer::drawSphere(Point center, float radius) {
         }
     }
 
-    this->vertexCount = arr.size() / 9;
+    this->vertexCount = idx.size();
 
     glBindVertexArray(this->VAO);
 
@@ -147,6 +137,29 @@ void Renderer::drawSphere(Point center, float radius) {
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, idx.size() * sizeof(GLuint), idx.data(), GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*)0);
+    glEnableVertexAttribArray(0);
+    
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*) (3 * sizeof(GLfloat)));
+    glEnableVertexAttribArray(1);
+    
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*) (6 * sizeof(GLfloat)));
+    glEnableVertexAttribArray(2);
+}
+
+void Renderer::instantiateSphere() {
+    std::vector<GLfloat> offsets;
+    for (int i = 0; i < 4; i++) {
+        offsets.push_back(0.f);
+        offsets.push_back(2.f - i);
+        offsets.push_back(0.f);
+    }
+    m_program->bind();
+
+    GLint location = glGetUniformLocation(m_program->programId(), "offsets[0]");
+
+    glUniform3fv(location, 4, offsets.data());
 }
 
 void Renderer::keyPressEvent(QKeyEvent *event) {

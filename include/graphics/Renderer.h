@@ -20,17 +20,23 @@ class Renderer : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
 public:
     explicit Renderer(QWidget *parent = nullptr);
     void drawSphere(Point center, float radius);
+    void instantiateSphere();
 
 protected:
     void initializeGL() override;
     void resizeGL(int w, int h) override;
     void paintGL() override;
-    std::vector<GLfloat> arr;
-    std::vector<unsigned int> idx;
+
     Camera cam;
+
     GLuint m_matrixUniform;
     GLuint VAO, VBO, EBO;
+
     int vertexCount = 0;
+    std::vector<GLfloat> arr;
+    std::vector<unsigned int> idx;
+
+
     QOpenGLShaderProgram *m_program;
     virtual void keyPressEvent(QKeyEvent *event);
 };
