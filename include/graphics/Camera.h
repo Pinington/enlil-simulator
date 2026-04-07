@@ -15,6 +15,7 @@ public:
     void rotate(float x, float y, float z, float deg);
     void move(float x, float y, float z);
     QMatrix4x4 getMatrix();
+    float speed = 0.1f;
 };
 
 #endif

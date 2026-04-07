@@ -1,6 +1,7 @@
 #include "graphics/Renderer.h"
 #include "graphics/Camera.h"
 #include <Qtimer>
+#include <iostream>
 
 Renderer::Renderer(QWidget *parent): QOpenGLWidget(parent), cam(float(800) / float(600)) {
     /* Constructor for regular FPS refresh
@@ -14,6 +15,7 @@ Renderer::Renderer(QWidget *parent): QOpenGLWidget(parent), cam(float(800) / flo
 void Renderer::initializeGL()
 {
     makeCurrent();  
+    this->setFocusPolicy(Qt::StrongFocus);
     initializeOpenGLFunctions();
     glEnable(GL_DEPTH_TEST);
     glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
@@ -57,6 +59,7 @@ void Renderer::resizeGL(int w, int h)
 
 void Renderer::paintGL()
 {
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     m_program->bind();
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -144,4 +147,15 @@ void Renderer::drawSphere(Point center, float radius) {
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, idx.size() * sizeof(GLuint), idx.data(), GL_STATIC_DRAW);
+}
+
+void Renderer::keyPressEvent(QKeyEvent *event) {
+    int k = event->key();
+    switch (k) {
+        case Qt::Key_W: cam.move(0, 0, cam.speed); break;
+        case Qt::Key_S: cam.move(0, 0, -cam.speed); break;
+        case Qt::Key_A: cam.move(cam.speed, 0, 0); break;
+        case Qt::Key_D: cam.move(-cam.speed, 0, 0); break;
+    }
+    repaint();
 }

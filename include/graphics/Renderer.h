@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <QOpenGLWidget>
 #include <QOpenGLShaderProgram>
+#include <QKeyEvent>
 #include "graphics/Camera.h"
 
 struct Point {
@@ -31,6 +32,7 @@ protected:
     GLuint VAO, VBO, EBO;
     int vertexCount = 0;
     QOpenGLShaderProgram *m_program;
+    virtual void keyPressEvent(QKeyEvent *event);
 };
 
 #endif 
