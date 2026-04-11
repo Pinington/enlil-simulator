@@ -59,7 +59,7 @@ void Renderer::paintGL()
 
     glBindVertexArray(this->VAO);
     // glDrawElements(GL_TRIANGLES, idx.size(), GL_UNSIGNED_INT, 0);
-    glDrawElementsInstanced(GL_TRIANGLES, this->vertexCount, GL_UNSIGNED_INT, 0, 4);
+    glDrawElementsInstanced(GL_TRIANGLES, this->vertexCount, GL_UNSIGNED_INT, 0, this->sphereCount);
 
     m_program->release();
 }
