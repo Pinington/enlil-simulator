@@ -1,8 +1,10 @@
 #include "graphics/Renderer.h"
 #include "graphics/Camera.h"
 #include <Qtimer>
-#include <iostream>
+#include <string>
+#include <sstream>
 
+        
 Renderer::Renderer(QWidget *parent): QOpenGLWidget(parent), cam(float(800) / float(600)) {
     /* Constructor for regular FPS refresh
     QTimer *timer = new QTimer(this);
@@ -32,9 +34,9 @@ void Renderer::initializeGL()
     glGenBuffers(1, &this->VBO);
     glGenBuffers(1, &this->EBO);
 
-    Point center = {-0.5f, 0.0f, 0.0f};
-    drawSphere(center, 0.5f);
-    instantiateSphere();
+    drawSphere(0.5f);
+    instantiateSphere(0.f, 0.f, 0.f);
+    instantiateSphere(0.f, 1.f, 0.f);
 
     m_program->release();
 }
@@ -71,13 +73,13 @@ Point evalSphere(float u, float v, float r) {
     return p;
 }
 
-void Renderer::drawSphere(Point center, float radius) {
+void Renderer::drawSphere(float radius) {
     
     auto addVertex = [&](Point p) {
         // Coordinates
-        arr.push_back(p.x + center.x);
-        arr.push_back(p.y + center.y);
-        arr.push_back(p.z + center.z);
+        arr.push_back(p.x);
+        arr.push_back(p.y);
+        arr.push_back(p.z);
 
         // Colors
         arr.push_back(0.14);
@@ -148,17 +150,12 @@ void Renderer::drawSphere(Point center, float radius) {
     glEnableVertexAttribArray(2);
 }
 
-void Renderer::instantiateSphere() {
-    std::vector<GLfloat> offsets;
-    for (int i = 0; i < 4; i++) {
-        offsets.push_back(0.f);
-        offsets.push_back(2.f - i);
-        offsets.push_back(0.f);
-    }
+void Renderer::instantiateSphere(float x, float y, float z) {
     m_program->bind();
-
-    GLint location = glGetUniformLocation(m_program->programId(), "offsets[0]");
-    glUniform3fv(location, 4, offsets.data());
+    std::string offsetIdx = "offsets[" + std::to_string(this->sphereCount) + "]";
+    GLint location = glGetUniformLocation(m_program->programId(), offsetIdx.c_str());
+    glUniform3f(location, x, y ,z);
+    this->sphereCount++;    
 }
 
 void Renderer::keyPressEvent(QKeyEvent *event) {

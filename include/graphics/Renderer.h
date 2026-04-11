@@ -19,8 +19,8 @@ class Renderer : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
 {
 public:
     explicit Renderer(QWidget *parent = nullptr);
-    void drawSphere(Point center, float radius);
-    void instantiateSphere();
+    void drawSphere(float radius);
+    void instantiateSphere(float x, float y, float z);
 
 protected:
     void initializeGL() override;
@@ -33,6 +33,7 @@ protected:
     GLuint VAO, VBO, EBO;
 
     int vertexCount = 0;
+    int sphereCount = 0;
     std::vector<GLfloat> arr;
     std::vector<unsigned int> idx;
 
