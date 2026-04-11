@@ -13,7 +13,7 @@ Renderer::Renderer(QWidget *parent): QOpenGLWidget(parent), cam(float(800) / flo
     */
 }
 
-
+ 
 void Renderer::initializeGL()
 {
     makeCurrent();  
