@@ -57,9 +57,6 @@ void Renderer::paintGL()
 
     m_program->setUniformValue(m_matrixUniform, cam.getMatrix());
 
-    qDebug() << "matrix uniform:" << m_matrixUniform;
-    qDebug() << QFile(":/src/graphics/shaders/vertex.glsl").exists();
-
     glBindVertexArray(this->VAO);
     // glDrawElements(GL_TRIANGLES, idx.size(), GL_UNSIGNED_INT, 0);
     glDrawElementsInstanced(GL_TRIANGLES, this->vertexCount, GL_UNSIGNED_INT, 0, this->sphereCount);
