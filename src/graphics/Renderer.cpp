@@ -64,17 +64,17 @@ void Renderer::paintGL()
     m_program->release();
 }
 
-Point evalSphere(float u, float v, float r) {
-    Point p;
-    p.x = cos(u)*sin(v)*r;
-    p.y = cos(v)*r;
-    p.z = sin(u)*sin(v)*r;
-
-    return p;
-}
-
 void Renderer::drawSphere(float radius) {
     
+    auto evalSphere = [](float u, float v, float r) {
+        Point p;
+        p.x = cos(u)*sin(v)*r;
+        p.y = cos(v)*r;
+        p.z = sin(u)*sin(v)*r;
+
+        return p;
+    };
+
     auto addVertex = [&](Point p) {
         // Coordinates
         arr.push_back(p.x);
