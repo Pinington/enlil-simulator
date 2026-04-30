@@ -32,12 +32,25 @@ void Renderer::initializeGL()
 
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
+    glGenBuffers(1, &offsetVBO);
     glGenBuffers(1, &EBO);
 
+    glBindBuffer(GL_ARRAY_BUFFER, offsetVBO);
+    glBufferData(GL_ARRAY_BUFFER, 64 * sizeof(float) * 3, nullptr, GL_DYNAMIC_DRAW); // 64 = MaxSpheres
+
     drawSphere(0.5f);
-    instantiateSphere(0.f, 0.f, 0.f);
+
+    glBindBuffer(GL_ARRAY_BUFFER, offsetVBO);
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(3);
+    glVertexAttribDivisor(3, 1); // Per instance instead of per vertex
+
+    instantiateSphere(0.f, -1.f, 0.f);
     instantiateSphere(0.f, 1.f, 0.f);
 
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
     m_program->release();
 }
 
@@ -56,9 +69,7 @@ void Renderer::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     m_program->setUniformValue(m_matrixUniform, cam.getMatrix());
-
     glBindVertexArray(this->VAO);
-    // glDrawElements(GL_TRIANGLES, idx.size(), GL_UNSIGNED_INT, 0);
     glDrawElementsInstanced(GL_TRIANGLES, vertexCount, GL_UNSIGNED_INT, 0, sphereCount);
 
     m_program->release();
@@ -141,21 +152,18 @@ void Renderer::drawSphere(float radius) {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, idx.size() * sizeof(GLuint), idx.data(), GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*)0);
-    glEnableVertexAttribArray(0);
-    
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*) (3 * sizeof(GLfloat)));
-    glEnableVertexAttribArray(1);
-    
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*) (6 * sizeof(GLfloat)));
-    glEnableVertexAttribArray(2);
 }
 
 void Renderer::instantiateSphere(float x, float y, float z) {
-    m_program->bind();
-    std::string offsetIdx = "offsets[" + std::to_string(sphereCount) + "]";
-    GLint location = glGetUniformLocation(m_program->programId(), offsetIdx.c_str());
-    glUniform3f(location, x, y ,z);
-    sphereCount++;    
+    glBindBuffer(GL_ARRAY_BUFFER, offsetVBO);
+    float data[3] = { x, y, z };
+    glBufferSubData(GL_ARRAY_BUFFER,
+                    sphereCount * sizeof(float) * 3, // offset in buffer
+                    sizeof(data),
+                    data);
+    sphereCount++;
 }
 
 void Renderer::keyPressEvent(QKeyEvent *event) {

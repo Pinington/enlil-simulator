@@ -30,7 +30,7 @@ protected:
     Camera cam;
 
     GLuint m_matrixUniform;
-    GLuint VAO, VBO, EBO;
+    GLuint VAO, VBO, offsetVBO, EBO;
 
     int vertexCount = 0;
     int sphereCount = 0;
