@@ -1,6 +1,6 @@
 #include "graphics/MeshMaker.h"
 
-void SphereMaker::initSphere(float radius) {
+SphereData SphereMaker::createSphere(float radius) {
     
     auto evalSphere = [](float u, float v, float r) {
         Point p;
@@ -28,8 +28,8 @@ void SphereMaker::initSphere(float radius) {
         arr.push_back(p.z);
     };
     
-    int uRes = 32;
-    int vRes = 32;
+    int uRes = URES;
+    int vRes = VRES;
 
     float uEnd = 2 * M_PI;
     float vEnd = M_PI;
@@ -67,4 +67,10 @@ void SphereMaker::initSphere(float radius) {
     }
 
     vertexCount = idx.size();
+
+    return {arr, idx};
+}
+
+int SphereMaker::getvertexCount() {
+    return vertexCount;
 }

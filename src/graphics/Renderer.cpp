@@ -35,22 +35,45 @@ void Renderer::initializeGL()
     glGenBuffers(1, &offsetVBO);
     glGenBuffers(1, &EBO);
 
-    glBindBuffer(GL_ARRAY_BUFFER, offsetVBO);
-    glBufferData(GL_ARRAY_BUFFER, 64 * sizeof(float) * 3, nullptr, GL_DYNAMIC_DRAW); // 64 = MaxSpheres
+    glBindVertexArray(VAO);
 
-    drawSphere(0.5f);
+    // Initalize Meshes
+    SphereData dat = sm.createSphere(0.5f);
+
+    std::vector<GLfloat> sphere_arr = dat.arr;
+    std::vector<unsigned int> sphere_idx = dat.idx;
+
+
+    // Pass data to VBOs and EBO
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * sphere_arr.size(), sphere_arr.data(), GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ARRAY_BUFFER, offsetVBO);
+    glBufferData(GL_ARRAY_BUFFER, MAX_SPHERES * sizeof(float) * 3, nullptr, GL_DYNAMIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sphere_idx.size() * sizeof(GLuint), sphere_idx.data(), GL_STATIC_DRAW);
+
+
+    // Pass info to VAO
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*)0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*) (3 * sizeof(GLfloat)));
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*) (6 * sizeof(GLfloat)));
 
     glBindBuffer(GL_ARRAY_BUFFER, offsetVBO);
     glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(3);
     glVertexAttribDivisor(3, 1); // Per instance instead of per vertex
-
-    instantiateSphere(0.f, -1.f, 0.f);
-    instantiateSphere(0.f, 1.f, 0.f);
 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);
+    glEnableVertexAttribArray(3);
+
+    // Simulate user input (testing)
+    instantiateSphere(0.f, -1.f, 0.f);
+    instantiateSphere(0.f, 1.f, 0.f);
+
     m_program->release();
 }
 
@@ -68,95 +91,15 @@ void Renderer::paintGL()
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    glBindVertexArray(VAO);
     m_program->setUniformValue(m_matrixUniform, cam.getMatrix());
-    glBindVertexArray(this->VAO);
-    glDrawElementsInstanced(GL_TRIANGLES, vertexCount, GL_UNSIGNED_INT, 0, sphereCount);
+    glDrawElementsInstanced(GL_TRIANGLES, sm.getvertexCount(), GL_UNSIGNED_INT, 0, sphereCount);
 
     m_program->release();
 }
 
-void Renderer::drawSphere(float radius) {
-    
-    auto evalSphere = [](float u, float v, float r) {
-        Point p;
-        p.x = cos(u)*sin(v)*r;
-        p.y = cos(v)*r;
-        p.z = sin(u)*sin(v)*r;
-
-        return p;
-    };
-
-    auto addVertex = [&](Point p) {
-        // Coordinates
-        arr.push_back(p.x);
-        arr.push_back(p.y);
-        arr.push_back(p.z);
-
-        // Colors
-        arr.push_back(0.14);
-        arr.push_back(0.43);
-        arr.push_back(0.12);
-
-        // Normals are normalized in the fragment shader
-        arr.push_back(p.x);
-        arr.push_back(p.y);
-        arr.push_back(p.z);
-    };
-    
-    int uRes = 32;
-    int vRes = 32;
-
-    float uEnd = 2 * M_PI;
-    float vEnd = M_PI;
-    float uStep = (uEnd) / uRes;
-    float vStep = (vEnd) / vRes;
-
-    int c = arr.size() / 9; 
-    for (int u = 0; u < uRes; u++) {
-        for (int v = 0; v < vRes; v++) {
-            float lng = u * uStep;
-            float lat = v * vStep;
-
-            float lngN = (u + 1 == uRes) ? uEnd : (u + 1) * uStep;
-            float latN = (v + 1 == vRes) ? vEnd : (v + 1) * vStep;
-
-            Point p0 = evalSphere(lng, lat, radius);
-            Point p1 = evalSphere(lng, latN, radius);
-            Point p2 = evalSphere(lngN, lat, radius);
-            Point p3 = evalSphere(lngN, latN, radius);
-
-            addVertex(p0);
-            addVertex(p1);
-            addVertex(p2);
-            addVertex(p3);
-            
-            idx.push_back(c + 0);
-            idx.push_back(c + 1);
-            idx.push_back(c + 2);
-
-            idx.push_back(c + 1);
-            idx.push_back(c + 2);
-            idx.push_back(c + 3);
-            c += 4;
-        }
-    }
-
-    vertexCount = idx.size();
-
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * arr.size(), arr.data(), GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, idx.size() * sizeof(GLuint), idx.data(), GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*)0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*) (3 * sizeof(GLfloat)));
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(GLfloat), (void*) (6 * sizeof(GLfloat)));
-}
-
 void Renderer::instantiateSphere(float x, float y, float z) {
+    if (sphereCount >= MAX_SPHERES) return;
     glBindBuffer(GL_ARRAY_BUFFER, offsetVBO);
     float data[3] = { x, y, z };
     glBufferSubData(GL_ARRAY_BUFFER,
@@ -174,5 +117,5 @@ void Renderer::keyPressEvent(QKeyEvent *event) {
         case Qt::Key_A: cam.rotate(0, 1, 0, 2); break;
         case Qt::Key_D: cam.rotate(0, 1, 0, -2); break;
     }
-    repaint();
+    update();
 }
