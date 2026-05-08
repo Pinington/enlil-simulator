@@ -25,3 +25,4 @@ Tidiness:
  - Document the code  
  - make consts file with resolutions, FPS, etc...
  - Throw errors in renderer
+ - Add QDesc, QTitle, and other meta data when starting the app up
