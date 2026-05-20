@@ -1,20 +1,27 @@
 #include "application/Application.h"
+#include "application/UI.h"
 #include "graphics/Renderer.h"
 
 int Application::run(int argc, char *argv[])
 {
-    // Create QT app
     QApplication app(argc, argv);
 
-    // Start a window
     QMainWindow window;
     window.resize(800, 600);
     window.setWindowTitle("Enlil Simulator");
 
-    // Start physics / renderer and add to window
-    Renderer* renderer = new Renderer();
-    window.setCentralWidget(renderer);
+    QWidget* container = new QWidget();
+    QVBoxLayout* mainLayout = new QVBoxLayout(container);
 
+    // Renderer & UI
+    Renderer* renderer = new Renderer();
+    UI* menuBar = new UI();
+
+    // Add widgets to layout
+    mainLayout->addWidget(menuBar);
+    mainLayout->addWidget(renderer);
+
+    window.setCentralWidget(container);
     window.show();
     return app.exec();
 }

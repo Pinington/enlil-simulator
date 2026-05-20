@@ -3,6 +3,8 @@
 
 #include <QApplication>
 #include <QMainWindow>
+#include <QWidget>
+#include <QVBoxLayout>
 
 class Application
 {
