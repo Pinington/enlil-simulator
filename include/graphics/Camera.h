@@ -7,7 +7,6 @@ class Camera {
 private:
     QMatrix4x4 projection;
     QMatrix4x4 view;
-    QMatrix4x4 model;
 
 public:
     Camera(float aspectRatio);
