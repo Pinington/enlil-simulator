@@ -10,8 +10,11 @@ int Application::run(int argc, char *argv[])
     window.resize(800, 600);
     window.setWindowTitle("Enlil Simulator");
 
+    // Container fot the app, no margin no padding
     QWidget* container = new QWidget();
     QVBoxLayout* mainLayout = new QVBoxLayout(container);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
+    mainLayout->setSpacing(0);
 
     // Renderer & UI
     Renderer* renderer = new Renderer();
