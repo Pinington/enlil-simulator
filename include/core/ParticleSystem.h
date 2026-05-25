@@ -2,6 +2,7 @@
 #define P_SYSTEM_H
 
 #include <vector>
+#include <memory>
 
 #include "core/Particles.h"
 
@@ -9,9 +10,9 @@
 
 class ParticleSystem {
 private:
-    std::vector<Particle> system;
+    std::vector<std::unique_ptr<Particle>> system;
 public:
-    void addParticles(std::vector<Particle> particles);
+    void addParticles(std::vector<std::unique_ptr<Particle>> particles);
     void updateSystem();
 };
 
