@@ -22,8 +22,8 @@ protected:
 
 public:
     Particle(Vec3d position, float mass) : position{position}, mass{mass} {};
-    virtual void update();
-    virtual void applyForce(Force f);
+    virtual void update() = 0;
+    virtual void applyForce(Force f) = 0;
     
 };
 
