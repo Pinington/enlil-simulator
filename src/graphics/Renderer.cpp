@@ -48,7 +48,7 @@ void Renderer::initializeGL()
     glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * sphere_arr.size(), sphere_arr.data(), GL_STATIC_DRAW);
 
     glBindBuffer(GL_ARRAY_BUFFER, offsetVBO);
-    glBufferData(GL_ARRAY_BUFFER, MAX_SPHERES * sizeof(float) * 3, nullptr, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, MAX_PARTICLES * sizeof(float) * 3, nullptr, GL_DYNAMIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sphere_idx.size() * sizeof(GLuint), sphere_idx.data(), GL_STATIC_DRAW);
@@ -98,7 +98,7 @@ void Renderer::paintGL()
 }
 
 void Renderer::instantiateSphere(float x, float y, float z) {
-    if (sphereCount >= MAX_SPHERES) return;
+    if (sphereCount >= MAX_PARTICLES) return;
     glBindBuffer(GL_ARRAY_BUFFER, offsetVBO);
     float data[3] = { x, y, z };
     glBufferSubData(GL_ARRAY_BUFFER,

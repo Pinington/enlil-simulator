@@ -1,7 +1,7 @@
 #include "core/ParticleSystem.h"
 
 void ParticleSystem::addParticles(std::vector<std::unique_ptr<Particle>> particles) {
-    if (system.size() > MAX_SPHERES) return;
+    if (system.size() > MAX_PARTICLES) return;
 
     system.insert(
         system.end(),

@@ -3,7 +3,7 @@
 
 // Renderer
 #define FPS 60
-#define MAX_SPHERES 64
+#define MAX_PARTICLES 64
 
 // Mesh Maker
 #define URES 32 // Sphere Latitude Resolution
