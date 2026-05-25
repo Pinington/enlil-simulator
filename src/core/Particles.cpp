@@ -7,7 +7,7 @@ void Sphere::update() {
 }
 
 void Sphere::applyForce(Force f) {
-    speed.x += (f.magnitude * f.dir.x) / mass;
-    speed.y += (f.magnitude * f.dir.y) / mass;
-    speed.z += (f.magnitude * f.dir.z) / mass;
+    speed.x += ((f.magnitude * f.dir.x) / mass) * DELTA_T;
+    speed.y += ((f.magnitude * f.dir.y) / mass) * DELTA_T;
+    speed.z += ((f.magnitude * f.dir.z) / mass) * DELTA_T;
 }
