@@ -7,11 +7,9 @@
 #include "graphics/Camera.h"
         
 Renderer::Renderer(QWidget *parent): QOpenGLWidget(parent), cam(float(800) / float(600)) {
-    /* Constructor for regular FPS refresh
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, QOverload<>::of(&Renderer::update));
     timer->start(100/FPS); 
-    */
 }
 
 
