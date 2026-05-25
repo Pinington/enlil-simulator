@@ -2,6 +2,7 @@
 #define CONST_H
 
 // Renderer
+#define FPS 60
 #define MAX_SPHERES 64
 
 // Mesh Maker
