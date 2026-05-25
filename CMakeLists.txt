@@ -11,16 +11,13 @@ qt_standard_project_setup()
 
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp")
 
+qt6_add_resources(RESOURCES resources.qrc)
+
 add_executable(enlil
     main.cpp
     ${SOURCES}
+    ${RESOURCES}
 )
-
-qt6_add_resources(RESOURCES
-    resources.qrc
-)
-
-target_sources(enlil PRIVATE ${RESOURCES})
 
 target_include_directories(enlil PRIVATE
     ${CMAKE_SOURCE_DIR}/include
