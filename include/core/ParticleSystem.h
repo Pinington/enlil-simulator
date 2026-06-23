@@ -12,7 +12,7 @@ class ParticleSystem {
 private:
     std::vector<std::unique_ptr<Particle>> system;
 public:
-    void addParticles(std::vector<std::unique_ptr<Particle>> particles);
+    void addParticles(std::vector<std::unique_ptr<Particle>>&& particles);
     void updateSystem();
 };
 
