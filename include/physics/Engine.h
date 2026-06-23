@@ -5,9 +5,12 @@
 
 class Engine {
 private:
-    ParticleSystem particles;
+    ParticleSystem& particles;
+    bool checkCollisions(Particle& a, Particle& b);
 public:
-    Engine(ParticleSystem particles) : particles(std::move(particles)) {}
+    Engine(ParticleSystem& particles) : particles(particles) {};
+    void resolveCollisions();
+    void applyGravity();
 };
 
 #endif
