@@ -69,9 +69,11 @@ void Renderer::initializeGL()
     glEnableVertexAttribArray(2);
     glEnableVertexAttribArray(3);
 
+#if TESTING
     // Simulate user input (testing)
     instantiateSphere(0.f, -1.f, 0.f);
     instantiateSphere(0.f, 1.f, 0.f);
+#endif
 
     m_program->release();
 }
