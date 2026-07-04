@@ -1,23 +1,14 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 
+#include "utils.h"
 #include "const.h"
-
-typedef struct {
-    float x;
-    float y;
-    float z;
-} Vec3d;
-
-typedef struct {
-    Vec3d dir;
-    int magnitude;
-} Force;
 
 class Particle {
 protected:
     Vec3d position;
     Vec3d speed;
+    Vec3d forces;
     float mass;
 
 public:
