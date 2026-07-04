@@ -1,7 +1,7 @@
 #ifndef PHYSICS_ENGINE_H
 #define PHYSICS_ENGINE_H
 
-#include "ParticleSystem.h"
+#include "core/ParticleSystem.h"
 
 class Engine {
 private:
