@@ -9,6 +9,7 @@
 #include "application/UI.h"
 #include "graphics/Renderer.h"
 
+#include "core/ParticleSystem.h"
 #include "physics/Engine.h"
 
 class Application
