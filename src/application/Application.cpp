@@ -1,8 +1,5 @@
 #include "application/Application.h"
-#include "application/UI.h"
-#include "graphics/Renderer.h"
 
-#include "physics/Engine.h"
 
 int Application::run(int argc, char *argv[])
 {
@@ -12,7 +9,7 @@ int Application::run(int argc, char *argv[])
     window.resize(800, 600);
     window.setWindowTitle("Enlil Simulator");
 
-    // Container fot the app, no margin no padding
+    // Container for the app, no margin no padding
     QWidget* container = new QWidget();
     QVBoxLayout* mainLayout = new QVBoxLayout(container);
     mainLayout->setContentsMargins(0, 0, 0, 0);
