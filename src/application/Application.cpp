@@ -26,5 +26,15 @@ int Application::run(int argc, char *argv[])
 
     window.setCentralWidget(container);
     window.show();
+
+
+    /*
+    =================
+    === Main Loop ===
+    =================
+    */ 
+
+
+
     return app.exec();
 }
