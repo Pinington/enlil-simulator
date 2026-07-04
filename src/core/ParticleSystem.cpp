@@ -11,6 +11,10 @@ void ParticleSystem::addParticles(std::vector<std::unique_ptr<Particle>>&& parti
     );
 }
 
+void ParticleSystem::addParticles(const Particle& particle) {
+    system.push_back(std::make_unique<Particle>(particle));
+}
+
 void ParticleSystem::updateSystem() {
     for (auto& p : this->system) {
         p->update();
