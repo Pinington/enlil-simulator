@@ -13,6 +13,7 @@ Camera:
 Core:
  - Make particles move around with gravity in a semi-sphere platform  
  - Link a particle system to the renderer
+ - Make verlet integration the main update method
 
  Physics:  
  - Add forces that follow cursor
@@ -23,6 +24,5 @@ Menu:
 
 Tidiness:
  - Document the code  
- - make consts file with resolutions, FPS, etc...
  - Throw errors in renderer
  - Add QDesc, QTitle, and other meta data when starting the app up
