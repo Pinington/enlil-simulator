@@ -1,6 +1,9 @@
 #ifndef CONST_H
 #define CONST_H
 
+// Testing
+#define TESTING 1
+
 // Renderer
 #define FPS 60
 #define MAX_PARTICLES 64

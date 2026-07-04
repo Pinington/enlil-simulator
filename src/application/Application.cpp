@@ -1,5 +1,8 @@
 #include "application/Application.h"
 
+#if TESTING
+#include "core/Particles.h"
+#endif
 
 int Application::run(int argc, char *argv[])
 {
@@ -33,9 +36,14 @@ int Application::run(int argc, char *argv[])
     =================
     */ 
 
-    ParticleSystem* particles = new ParticleSystem;
+    ParticleSystem particles;
     Engine engine(particles);
 
+    
+#if TESTING
+    Sphere s ( {0.f, 0.f, 0.f}, 1.0f );
+    particles.addParticles(s);
+#endif
 
     return app.exec();
 }

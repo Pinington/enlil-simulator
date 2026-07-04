@@ -12,6 +12,8 @@
 #include "core/ParticleSystem.h"
 #include "physics/Engine.h"
 
+#include "const.h"
+
 class Application
 {
 public:
