@@ -33,7 +33,8 @@ int Application::run(int argc, char *argv[])
     =================
     */ 
 
-    
+    ParticleSystem* particles = new ParticleSystem;
+    Engine engine(particles);
 
 
     return app.exec();
