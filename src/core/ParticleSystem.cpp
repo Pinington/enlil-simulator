@@ -12,7 +12,7 @@ void ParticleSystem::addParticles(std::vector<std::unique_ptr<Particle>>&& parti
 }
 
 void ParticleSystem::addParticles(const Particle& particle) {
-    system.push_back(std::make_unique<Particle>(particle));
+    system.push_back(particle.clone());
 }
 
 void ParticleSystem::updateSystem() {

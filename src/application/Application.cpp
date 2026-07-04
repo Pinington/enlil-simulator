@@ -39,9 +39,9 @@ int Application::run(int argc, char *argv[])
     ParticleSystem particles;
     Engine engine(particles);
 
-    
+
 #if TESTING
-    Sphere s ( {0.f, 0.f, 0.f}, 1.0f );
+    SphereParticle s ( {0.f, 0.f, 0.f}, 1.0f );
     particles.addParticles(s);
 #endif
 
