@@ -41,8 +41,10 @@ int Application::run(int argc, char *argv[])
 
 
 #if TESTING
-    SphereParticle s ( {0.f, 0.f, 0.f}, 1.0f );
+    float x = 0.f; float y = 0.f; float z = 0.f;
+    SphereParticle s ( {x, y, z}, 1.0f );
     particles.addParticles(s);
+    renderer->instantiateSphere(x, y, z);
 #endif
 
     return app.exec();
