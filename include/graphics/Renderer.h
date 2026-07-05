@@ -26,6 +26,8 @@ protected:
     void resizeGL(int w, int h) override;
     void paintGL() override;
 
+    void updatePositions(const std::vector<float>& positions);
+
     Camera cam;
 
     GLuint m_matrixUniform;
@@ -33,7 +35,7 @@ protected:
 
     SphereMaker sm;
     int sphereCount { 0 };
-    std::vector<Vec3d> positions;
+    std::vector<float> positions;
 
     QOpenGLShaderProgram *m_program;
     virtual void keyPressEvent(QKeyEvent *event);

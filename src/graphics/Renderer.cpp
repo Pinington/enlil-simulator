@@ -102,6 +102,21 @@ void Renderer::instantiateSphere(float x, float y, float z) {
                     sizeof(data),
                     data);
     sphereCount++;
+    positions.push_back(x); positions.push_back(y); positions.push_back(z);
+}
+
+void Renderer::updatePositions(const std::vector<float>& positions) {
+    if (positions.size() != sphereCount) return;
+
+    this->positions = positions;
+
+    glBindBuffer(GL_ARRAY_BUFFER, offsetVBO);
+    glBufferSubData(
+        GL_ARRAY_BUFFER,
+        0,
+        positions.size() * sizeof(float),
+        positions.data()
+    );
 }
 
 void Renderer::keyPressEvent(QKeyEvent *event) {
