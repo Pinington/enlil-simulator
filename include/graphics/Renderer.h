@@ -7,10 +7,13 @@
 #include <QOpenGLShaderProgram>
 #include <QKeyEvent>
 
+#include <vector>
+
 #include "graphics/Camera.h"
 #include "graphics/MeshMaker.h"
 
 #include "const.h"
+#include "utils.h"
 
 class Renderer : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
 {
@@ -30,6 +33,7 @@ protected:
 
     SphereMaker sm;
     int sphereCount { 0 };
+    std::vector<Vec3d> positions;
 
     QOpenGLShaderProgram *m_program;
     virtual void keyPressEvent(QKeyEvent *event);
