@@ -17,6 +17,16 @@
 
 class Renderer : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
 {
+private:
+    Camera cam;
+
+    GLuint m_matrixUniform;
+    GLuint VAO, VBO, offsetVBO, EBO;
+
+    SphereMaker sm;
+    int sphereCount { 0 };
+    std::vector<float> positions;
+    
 public:
     explicit Renderer(QWidget *parent = nullptr);
     void instantiateSphere(float x, float y, float z);
@@ -26,15 +36,6 @@ protected:
     void initializeGL() override;
     void resizeGL(int w, int h) override;
     void paintGL() override;
-
-    Camera cam;
-
-    GLuint m_matrixUniform;
-    GLuint VAO, VBO, offsetVBO, EBO;
-
-    SphereMaker sm;
-    int sphereCount { 0 };
-    std::vector<float> positions;
 
     QOpenGLShaderProgram *m_program;
     virtual void keyPressEvent(QKeyEvent *event);
