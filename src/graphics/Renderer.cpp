@@ -105,17 +105,17 @@ void Renderer::instantiateSphere(float x, float y, float z) {
     positions.push_back(x); positions.push_back(y); positions.push_back(z);
 }
 
-void Renderer::updatePositions(const std::vector<float>& positions) {
-    if (positions.size() != sphereCount) return;
+void Renderer::updatePositions(const std::vector<float>& instancePositions) {
+    if (instancePositions.size() != sphereCount * 3) return;
 
-    this->positions = positions;
+    this->positions = instancePositions;
 
     glBindBuffer(GL_ARRAY_BUFFER, offsetVBO);
     glBufferSubData(
         GL_ARRAY_BUFFER,
         0,
-        positions.size() * sizeof(float),
-        positions.data()
+        instancePositions.size() * sizeof(float),
+        instancePositions.data()
     );
 }
 

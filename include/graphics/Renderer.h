@@ -20,13 +20,12 @@ class Renderer : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
 public:
     explicit Renderer(QWidget *parent = nullptr);
     void instantiateSphere(float x, float y, float z);
+    void updatePositions(const std::vector<float>&);
 
 protected:
     void initializeGL() override;
     void resizeGL(int w, int h) override;
     void paintGL() override;
-
-    void updatePositions(const std::vector<float>& positions);
 
     Camera cam;
 
