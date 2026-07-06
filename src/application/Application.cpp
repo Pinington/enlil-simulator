@@ -45,6 +45,7 @@ int Application::run(int argc, char *argv[])
     SphereParticle s ( {x, y, z}, 1.0f );
     particles.addParticles(s);
     renderer->instantiateSphere(x, y, z);
+    renderer->updatePositions(std::vector<float> {0.f, 1.f, 0.f});
 #endif
 
     return app.exec();
