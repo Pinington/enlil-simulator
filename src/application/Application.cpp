@@ -4,6 +4,15 @@
 #include "core/Particles.h"
 #endif
 
+inline void newFrame(Engine& e, ParticleSystem& ps, Renderer* r) {
+    /*
+     The architecture might suck ass because I need to independently work on the particles and
+     renderer so the user kinda has to know that or use this function
+    */
+    // e.applyGravity();
+    // r->updatePositions(ps.getPositions());
+}
+
 int Application::run(int argc, char *argv[])
 {
     QApplication app(argc, argv);
@@ -41,11 +50,14 @@ int Application::run(int argc, char *argv[])
 
 
 #if TESTING
+    // Creating particles manually for test
     float x = 0.f; float y = 0.f; float z = 0.f;
     SphereParticle s ( {x, y, z}, 1.0f );
     particles.addParticles(s);
     renderer->instantiateSphere(x, y, z);
+
     renderer->updatePositions(std::vector<float> {0.f, 1.f, 0.f});
+
 #endif
 
     return app.exec();
