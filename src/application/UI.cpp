@@ -3,6 +3,7 @@
 UI::UI(QWidget *parent) {
     QHBoxLayout* topLayout = new QHBoxLayout(this);
 
+    // Tools for the menu bar
     QPushButton* redButton = new QPushButton("Red");
     QPushButton* blueButton = new QPushButton("Blue");
     
