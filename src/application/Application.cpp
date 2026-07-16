@@ -67,7 +67,7 @@ int Application::run(int argc, char *argv[])
         newFrame(engine, particles, renderer);
     });
 
-    simulationTimer->start(DELTA_T);
+    simulationTimer->start(DELTA_T * 1000);
 
     return app.exec();
 }
