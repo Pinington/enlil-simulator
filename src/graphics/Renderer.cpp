@@ -2,6 +2,7 @@
 #include <string>
 #include <sstream>
 #include <QFile>
+#include <QDebug>
 
 #include "graphics/Renderer.h"
 #include "graphics/Camera.h"
@@ -107,6 +108,14 @@ void Renderer::instantiateSphere(float x, float y, float z) {
 
 void Renderer::updatePositions(const std::vector<float>& instancePositions) {
     if (instancePositions.size() != sphereCount * 3) return;
+
+#if TESTING_RENDERER
+    qDebug()
+        << "Position:"
+        << instancePositions[0]
+        << instancePositions[1]
+        << instancePositions[2];
+#endif
 
     this->positions = instancePositions;
 
