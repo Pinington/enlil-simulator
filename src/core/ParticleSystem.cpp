@@ -20,3 +20,7 @@ void ParticleSystem::updateSystem() {
         p->update();
     }
 }
+
+std::vector<std::unique_ptr<Particle>> ParticleSystem::getSystem() {
+    return system;
+}
