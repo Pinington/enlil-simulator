@@ -18,6 +18,8 @@ public:
     virtual void update() = 0;
     virtual void applyForce(Force f) = 0;
     virtual std::unique_ptr<Particle> clone() const = 0;
+
+    Vec3d getPosition() const { return position; }
 };
 
 class SphereParticle : public Particle {
