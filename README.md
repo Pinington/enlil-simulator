@@ -38,13 +38,13 @@ Platforms are missing for now and the camera angle isn't optimal to watch the si
 The next versions will tackle these issues. (although they may be delayed for a couple months)
 
 ----------  
-# Ver 0.2.0-alpha.1
+## Ver 0.2.0-alpha.1
 
 ### Halley collides
 This newer version will tackle the issue of GUI and collisions for multiple spheres.  
   
 ----------  
-# Ver 0.3.0-alpha.1
+## Ver 0.3.0-alpha.1
 
 ### Bouncy
 This version will solve UX and add multiple platforms for the simulation to happen in.
