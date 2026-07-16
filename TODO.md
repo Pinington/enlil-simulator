@@ -1,7 +1,6 @@
 # TO DO List
 Renderer:
  - Clean the entire renderer.cpp code
- - Instantiate on command without predefined values 
  - Set an FPS
  - Maybe make a mesh factory class
 
@@ -15,9 +14,10 @@ Core:
  - Link a particle system to the renderer
  - Make verlet integration the main update method
 
- Physics:  
+Physics:  
  - Add forces that follow cursor
  - Add platforms
+ - Simulate movement based on Verlet integration
 
 Menu:
  - Connect a GUI Menu to the renderer
