@@ -14,7 +14,12 @@ protected:
     float mass;
 
 public:
-    Particle(Vec3d position, float mass) : position{position}, mass{mass} {};
+    Particle(Vec3d position, float mass)
+    : position{position},
+      speed{0.f, 0.f, 0.f},
+      forces{0.f, 0.f, 0.f},
+      mass{mass}
+    {};
     virtual void update() = 0;
     virtual void applyForce(Force f) = 0;
     virtual std::unique_ptr<Particle> clone() const = 0;
