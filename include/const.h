@@ -3,6 +3,7 @@
 
 // Testing
 #define TESTING 1
+#define TESTING_RENDERER 0
 
 // Renderer
 #define FPS 60
