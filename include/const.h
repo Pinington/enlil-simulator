@@ -13,6 +13,6 @@
 #define VRES 32 // Sphere Longitude Resolution
 
 // Core
-#define DELTA_T 0.01
+#define DELTA_T 0.01 // Physics time step (in seconds)
 
 #endif
