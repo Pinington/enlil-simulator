@@ -9,8 +9,9 @@ inline void newFrame(Engine& e, ParticleSystem& ps, Renderer* r) {
      The architecture might suck ass because I need to independently work on the particles and
      renderer so the user kinda has to know that or use this function
     */
-    // e.applyGravity();
-    // r->updatePositions(ps.getPositions());
+    e.applyGravity();
+    ps.updateSystem();
+    r->updatePositions(ps.getPositions());
 }
 
 int Application::run(int argc, char *argv[])
@@ -59,6 +60,14 @@ int Application::run(int argc, char *argv[])
     renderer->updatePositions(std::vector<float> {0.f, 1.f, 0.f});
 
 #endif
+
+    QTimer* simulationTimer = new QTimer();
+
+    QObject::connect(simulationTimer, &QTimer::timeout, [&]() {
+        newFrame(engine, particles, renderer);
+    });
+
+    simulationTimer->start(DELTA_T);
 
     return app.exec();
 }

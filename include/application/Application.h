@@ -5,6 +5,7 @@
 #include <QMainWindow>
 #include <QWidget>
 #include <QVBoxLayout>
+#include <QTimer>
 
 #include "application/UI.h"
 #include "graphics/Renderer.h"
