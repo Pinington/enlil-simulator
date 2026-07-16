@@ -21,6 +21,21 @@ void ParticleSystem::updateSystem() {
     }
 }
 
-std::vector<std::unique_ptr<Particle>> ParticleSystem::getSystem() {
+std::vector<std::unique_ptr<Particle>>& ParticleSystem::getSystem() {
     return system;
+}
+
+std::vector<float> ParticleSystem::getPositions() {
+    std::vector<float> positions;
+    positions.reserve(system.size() * 3);
+
+    for (const auto& p : system) {
+        const Vec3d& pos = p->getPosition();
+
+        positions.push_back(pos.x);
+        positions.push_back(pos.y);
+        positions.push_back(pos.z);
+    }
+
+    return positions;
 }
