@@ -4,8 +4,8 @@ UI::UI(QWidget *parent) {
     QHBoxLayout* topLayout = new QHBoxLayout(this);
 
     // Tools for the menu bar
-    QPushButton* redButton = new QPushButton("Red");
-    QPushButton* blueButton = new QPushButton("Blue");
+    QPushButton* redButton = new QPushButton("Create");
+    QPushButton* blueButton = new QPushButton("Delete");
     
     this->setFixedHeight(40);
 

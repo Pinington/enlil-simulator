@@ -6,7 +6,7 @@
 #define TESTING_RENDERER 0
 
 // Renderer
-#define FPS 60
+#define FPS 30
 #define MAX_PARTICLES 64
 
 // Mesh Maker
@@ -14,6 +14,6 @@
 #define VRES 32 // Sphere Longitude Resolution
 
 // Core
-#define DELTA_T 0.01 // Physics time step (in seconds)
+#define DELTA_T 0.02 // Physics time step (in seconds)
 
 #endif

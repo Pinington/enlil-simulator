@@ -52,7 +52,7 @@ int Application::run(int argc, char *argv[])
 
 #if TESTING
     // Creating particles manually for test
-    float x = 0.f; float y = 0.f; float z = 0.f;
+    float x = 0.f; float y = 2.f; float z = 0.f;
     SphereParticle s ( {x, y, z}, 1.0f );
     particles.addParticles(s);
     renderer->instantiateSphere(x, y, z);
